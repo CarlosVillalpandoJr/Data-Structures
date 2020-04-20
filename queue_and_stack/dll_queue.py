@@ -17,3 +17,5 @@ class Queue:
 
     def len(self):
         pass
+
+print(DoublyLinkedList)
