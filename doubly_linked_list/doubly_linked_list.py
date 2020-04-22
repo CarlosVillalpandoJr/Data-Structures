@@ -54,19 +54,21 @@ class DoublyLinkedList:
     def add_to_head(self, value):
         new_node = ListNode(value)
         self.length += 1
-        if not self.head and not self.tail:
+        # if there is not head or tail
+        if not self.head and not self.tail: 
             self.head = new_node
             self.tail = new_node
+        # if there is a head and tail
         else:
-            new_node.next = self.head
-            self.head.prev = new_node
-            self.head = new_node
+            new_node.next = self.head # new node is head and its next value is the old head
+            self.head.prev = new_node # old head previous is not new node
+            self.head = new_node # set the head of the DLL to the new node
 
     """Removes the List's current head node, making the
     current head's next node the new head of the List.
     Returns the value of the removed Node."""
     def remove_from_head(self):
-        self.delete(self.head)
+        self.delete(self.head) # method is defined in the ListNode class
 
     """Wraps the given value in a ListNode and inserts it 
     as the new tail of the list. Don't forget to handle 
@@ -96,7 +98,7 @@ class DoublyLinkedList:
         if node is self.head:
             return
         self.add_to_head(node.value)
-        self.delete(node)
+        self.delete(node) # delete node from original position
 
     """Removes the input node from its current spot in the 
     List and inserts it as the new tail node of the List."""
@@ -104,7 +106,7 @@ class DoublyLinkedList:
         if node is self.tail:
             return
         self.add_to_tail(node.value)
-        self.delete(node)
+        self.delete(node) # delete node from original position
 
     """Removes a node from the list and handles cases where
     the node was the head or the tail"""
