@@ -1,6 +1,6 @@
 import sys
 sys.path.append('../doubly_linked_list')
-from doubly_linked_list import DoublyLinkedList, ListNode
+from doubly_linked_list import DoublyLinkedList
 
 class LRUCache:
     """
@@ -12,8 +12,9 @@ class LRUCache:
     """
     def __init__(self, limit=10):
         self.limit = limit
-        self.dll = DoublyLinkedList()
         self.storage = {}
+        self.ordering = DoublyLinkedList()
+        self.size = 0
 
     """
     Retrieves the value associated with the given key. Also
@@ -23,10 +24,14 @@ class LRUCache:
     key-value pair doesn't exist in the cache.
     """
     def get(self, key):
-        if key not in self.storage:
+        # check to see if key is in cache
+        if key in self.storage:
+            # fetch the DLL node which is the value of this key
+            node = self.storage[key]
+            self.ordering.move_to_end(node)
+            return node.value[1] # fetching second element in the tuple
+        else:
             return None
-        self.dll.move_to_front(self.storage[key])
-        return self.storage[key].value[1]
 
     """
     Adds the given key-value pair to the cache. The newly-
@@ -39,17 +44,26 @@ class LRUCache:
     the newly-specified value.
     """
     def set(self, key, value):
-        if len(self.dll) == self.limit:
-            if key not in self.storage:
-                del self.storage[self.dll.tail.value[0]]
-
-                self.dll.remove_from_tail()
-                self.dll.add_to_head((key, value))
-                self.storage[key] = self.dll.head
-
-            else:
-                self.dll.add_to_head((key, value))
-                self.storage[key] = self.dll.head
+        # check if the key is in the cache
+        if key in self.storage:
+            node = self.storage[key]
+            # overwrite the old value
+            node.value = (key,value)
+            # move node to tail, MRU
+            self.ordering.move_to_end(node)
+            return
+        if self.size == self.limit:
+            # fetch oldest key
+            # fevict the LRU element
+            oldest_key = self.ordering.head.value[0]
+            del self.storage[oldest_key]
+            # remove the head node from the DLL
+            self.ordering.remove_from_head
+            self.size -= 1
+        # add the key and value
+        self.ordering.add_to_tail((key, value))
+        self.storage[key] = self.ordering.tail
+        self.size += 1
 
 
 
