@@ -54,8 +54,9 @@ class LRUCache:
             return
         if self.size == self.limit:
             # fetch oldest key
-            # fevict the LRU element
+            # fetch the LRU element
             oldest_key = self.ordering.head.value[0]
+            # deleting from storage (hashmap/dictionary)
             del self.storage[oldest_key]
             # remove the head node from the DLL
             self.ordering.remove_from_head
