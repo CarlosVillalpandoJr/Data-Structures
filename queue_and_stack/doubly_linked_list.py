@@ -68,6 +68,7 @@ class DoublyLinkedList:
     def remove_from_head(self):
         value = self.head.value
         self.delete(self.head)
+        return value
 
     """Wraps the given value in a ListNode and inserts it 
     as the new tail of the list. Don't forget to handle 

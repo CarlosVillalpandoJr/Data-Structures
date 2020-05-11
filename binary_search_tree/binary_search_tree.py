@@ -4,20 +4,21 @@ from dll_queue import Queue
 from dll_stack import Stack
 
 
-class BinarySearchTreeNode:
+class BinarySearchTree:
     def __init__(self, value):
         self.value = value
         self.left = None
         self.right = None
 
-    # recursive 'insert' implementation
-    # does not return anything when executed
 
     def insert(self, value):
+        # CS28 Lecture 1:20:00
+        # self.left and/or self.right need to be valid nodes
+        # to call insert on them 
         
 
     def contains(self, target):
-        pass
+        
 
     # Return the maximum value found in the tree
     def get_max(self):
@@ -26,7 +27,7 @@ class BinarySearchTreeNode:
     # Call the function `cb` on the value of each node
     # You may use a recursive or iterative approach
     def for_each(self, cb):
-        pass
+        
 
     # DAY 2 Project -----------------------
 
