@@ -1,10 +1,14 @@
-import sys
-sys.path.append('../queue_and_stack')
-from dll_queue import Queue
-from dll_stack import Stack
-
-
-class BinarySearchTree:
+"""
+Binary search trees are a data structure that enforce an ordering over 
+the data they store. That ordering in turn makes it a lot more efficient 
+at searching for a particular piece of data in the tree. 
+This part of the project comprises two days:
+1. Implement the methods `insert`, `contains`, `get_max`, and `for_each`
+    on the BSTNode class.
+2. Implement the `in_order_print`, `bft_print`, and `dft_print` methods
+    on the BSTNode class.
+"""
+class BSTNode:
     def __init__(self, value):
         self.value = value
         self.left = None
@@ -12,23 +16,50 @@ class BinarySearchTree:
 
     # Insert the given value into the tree
     def insert(self, value):
-        pass
+        if self.value <= value:
+            if self.right is None:
+                self.right = BSTNode(value)
+            else:
+                self.right.insert(value)
+        else:
+            if self.left is None:
+                self.left = BSTNode(value)
+            else:
+                self.left.insert(value)
+
 
     # Return True if the tree contains the value
     # False if it does not
     def contains(self, target):
-        pass
+        if target == self.value:
+            return True
+        if target < self.value:
+            if not self.left:
+                return False
+            return self.left.contains(target)
+        else:
+            if not self.right:
+                return False
+            return self.right.contains(target)
+
 
     # Return the maximum value found in the tree
     def get_max(self):
-        pass
+        current = self
+        while current.right:
+            current = current.right
+        return current.value
 
-    # Call the function `cb` on the value of each node
-    # You may use a recursive or iterative approach
-    def for_each(self, cb):
-        pass
+    # Call the function `fn` on the value of each node
+    def for_each(self, fn):
+        fn(self.value)
+        if self.left:
+            self.left.for_each(fn)
+        if self.right:
+            self.right.for_each(fn)
+        
 
-    # DAY 2 Project -----------------------
+    # Part 2 -----------------------
 
     # Print all the values in order from low to high
     # Hint:  Use a recursive, depth first traversal
@@ -45,7 +76,7 @@ class BinarySearchTree:
     def dft_print(self, node):
         pass
 
-    # STRETCH Goals -------------------------
+    # Stretch Goals -------------------------
     # Note: Research may be required
 
     # Print Pre-order recursive DFT

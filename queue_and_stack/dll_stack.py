@@ -6,13 +6,19 @@ class Stack:
     def __init__(self):
         self.size = 0
         # Why is our DLL a good choice to store our elements?
-        # self.storage = ?
+        # When you want the last thing in the stack to execute first (browser history)
+        self.storage = DoublyLinkedList()
 
     def push(self, value):
-        pass
+        self.storage.add_to_head(value)
+        self.size += 1
 
     def pop(self):
-        pass
+        if self.storage.head is None:
+            return None
+        else:
+            self.size -= 1
+            return self.storage.remove_from_head()
 
     def len(self):
-        pass
+        return self.size
